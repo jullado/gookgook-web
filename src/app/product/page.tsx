@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { ProductModel } from "@/utils/models";
+import { ProductModel, ResponseError } from "@/utils/models";
 import axios, { AxiosResponse } from "axios";
-import { HandleResponseError } from "@/utils/functions";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function ProductListPage() {
   const products = [] as ProductModel[];
@@ -17,7 +17,13 @@ export default async function ProductListPage() {
 
     products.push(...res.data);
   } catch (error) {
-    HandleResponseError(error);
+    const err = error as ResponseError;
+    const errData = err.response?.data;
+    if (errData) {
+      if (errData.status === 401) {
+        redirect("/deal");
+      }
+    }
   }
 
   return (
