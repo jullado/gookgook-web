@@ -26,11 +26,8 @@ export default function DealPage() {
   const getDeals = async () => {
     showLoading();
     try {
-      const res = (await axios(
-        process.env.NEXT_PUBLIC_API_URL + "/api/v1/deal/all",
-        {
-          method: "GET",
-        }
+      const res = (await axios.get(
+        process.env.NEXT_PUBLIC_API_URL + "/api/v1/deal/all"
       )) as AxiosResponse<DealsModel[]>;
 
       setDeals(res.data);

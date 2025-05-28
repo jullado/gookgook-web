@@ -8,11 +8,8 @@ export default async function ProductListPage() {
   const products = [] as ProductModel[];
 
   try {
-    const res = (await axios(
-      process.env.NEXT_PUBLIC_API_URL + "/api/v1/product/all",
-      {
-        method: "GET",
-      }
+    const res = (await axios.get(
+      process.env.NEXT_PUBLIC_API_URL + "/api/v1/product/all"
     )) as AxiosResponse<ProductModel[]>;
 
     products.push(...res.data);
