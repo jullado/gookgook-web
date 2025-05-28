@@ -52,5 +52,6 @@ export type VoucherModel = {
   redeem: boolean;
   create_at: Date;
   deals: DealsModel;
+  companies: CompanyModel;
   products: string[];
 }
