@@ -3,6 +3,7 @@ import { useState } from "react";
 import Cookies from "js-cookie";
 import { useAuthModal } from "@/contexts/authCtx";
 import { signin, signout } from "@/services/users";
+import toast from 'react-hot-toast';
 
 export const useAuth = () => {
   const { showModal, closeModal } = useAuthModal();
@@ -30,9 +31,13 @@ export const useAuth = () => {
   };
 
   const logout = async () => {
-    await signout(Cookies.get("refresh_token") as string);
-    Cookies.remove("access_token");
-    Cookies.remove("refresh_token");
+    try {
+      await signout(Cookies.get("refresh_token") as string);
+      Cookies.remove("access_token");
+      Cookies.remove("refresh_token");
+    } catch {
+      toast.error("Unexpected error occurred");
+    }
   };
 
   const fillDefaultCredentials = () => {
