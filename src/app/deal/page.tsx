@@ -1,12 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import { HandleResponseError } from "@/utils/functions";
-import { DealsModel } from "@/utils/models";
-import { AxiosResponse } from "axios";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
@@ -15,31 +8,10 @@ import {
   Navigation,
   Pagination,
 } from "swiper/modules";
-import { useLoading } from "../contexts/loadingCtx";
+import { useDeals } from '@/hooks/deals/useDeals';
 
 export default function DealPage() {
-  const router = useRouter();
-  const [deals, setDeals] = useState([] as DealsModel[]);
-  const { showLoading, hideLoading } = useLoading();
-
-  // get all deals
-  const getDeals = async () => {
-    showLoading();
-    try {
-      const res = (await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/api/v1/deal/all"
-      )) as AxiosResponse<DealsModel[]>;
-
-      setDeals(res.data);
-    } catch (error) {
-      HandleResponseError(error);
-    }
-    hideLoading();
-  };
-
-  useEffect(() => {
-    getDeals();
-  }, []);
+  const { deals, showDetail } = useDeals();
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-10 px-4">
@@ -83,7 +55,7 @@ export default function DealPage() {
                     {deal.description}
                   </p>
                   <button
-                    onClick={() => router.push(`/deal/${deal.deal_id}`)}
+                    onClick={() => showDetail(deal.deal_id)}
                     className="cursor-pointer mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 text-sm"
                   >
                     ดูรายละเอียด

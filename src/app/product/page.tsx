@@ -1,27 +1,9 @@
 import Image from "next/image";
-import { ProductModel, ResponseError } from "@/utils/models";
-import axios, { AxiosResponse } from "axios";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { getAllProduct } from '@/hooks/products/useAllProducts';
 
 export default async function ProductListPage() {
-  const products = [] as ProductModel[];
-
-  try {
-    const res = (await axios.get(
-      process.env.NEXT_PUBLIC_API_URL + "/api/v1/product/all"
-    )) as AxiosResponse<ProductModel[]>;
-
-    products.push(...res.data);
-  } catch (error) {
-    const err = error as ResponseError;
-    const errData = err.response?.data;
-    if (errData) {
-      if (errData.status === 401) {
-        redirect("/deal");
-      }
-    }
-  }
+  const products = await getAllProduct();
 
   return (
     <div className="max-w-6xl mx-auto py-8 px-4">

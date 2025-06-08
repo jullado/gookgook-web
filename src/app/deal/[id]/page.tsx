@@ -1,85 +1,14 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-"use client";
+ "use client";
 
-import { DealsModel } from "@/utils/models";
-import axios from "axios";
 import Image from "next/image";
 import dayjs from "dayjs";
 import "dayjs/locale/th";
-import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { HandleResponseError } from "@/utils/functions";
-import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
-import { useLoading } from "@/app/contexts/loadingCtx";
+import { useDealPage } from "@/hooks/deals/useDealPage";
 
 dayjs.locale("th");
 
 export default function DealDetailPage() {
-  const { id } = useParams<{ id: string }>();
-  const [deal, setDeal] = useState({} as DealsModel);
-  const [isClaimed, setIsClaimed] = useState(false);
-  const { showLoading, hideLoading } = useLoading();
-
-  const getDeal = async () => {
-    try {
-      const res = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/api/v1/deal/" + id
-      );
-
-      setDeal(res.data);
-    } catch (error) {
-      HandleResponseError(error);
-    }
-  };
-
-  const checkVoucher = async () => {
-    try {
-      const res = await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/api/v1/user/voucher/" + id,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access_token")}`,
-          },
-        }
-      );
-
-      setIsClaimed(res.data);
-    } catch (error) {
-      HandleResponseError(error);
-    }
-  };
-
-  useEffect(() => {
-    showLoading();
-    getDeal();
-    checkVoucher();
-  }, [id]);
-
-  useEffect(() => {
-    if (deal) {
-      hideLoading();
-    }
-  }, [deal]);
-
-  const handleClaim = async () => {
-    try {
-      await axios.post(
-        process.env.NEXT_PUBLIC_API_URL + "/api/v1/user/voucher/" + id,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access_token")}`,
-          },
-        }
-      );
-      setIsClaimed(true);
-      toast.success("รับสิทธิ์สําเร็จ");
-    } catch (error) {
-      HandleResponseError(error);
-    }
-  };
-
+  const { deal, isClaimed, handleClaim } = useDealPage();
   const isExpired = dayjs().isAfter(dayjs(deal.expires_at));
 
   return (

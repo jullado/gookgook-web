@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
+import Loading  from "@/components/loading";
 
 type LoadingContextType = {
   loading: boolean;
@@ -8,8 +9,10 @@ type LoadingContextType = {
   hideLoading: () => void;
 };
 
+// สร้าง context
 const LoadingContext = createContext<LoadingContextType | undefined>(undefined);
 
+// export context ของ provider เพื่อให้ component อื่นสามารถใช้งานได้
 export const useLoading = () => {
   const context = useContext(LoadingContext);
   if (!context) throw new Error("useLoading must be used within LoadingProvider");
@@ -25,11 +28,7 @@ export const LoadingProvider = ({ children }: { children: React.ReactNode }) => 
   return (
     <LoadingContext.Provider value={{ loading, showLoading, hideLoading }}>
       {children}
-      {loading && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
-          <div className="text-white text-xl animate-pulse">กำลังโหลด...</div>
-        </div>
-      )}
+      {loading && <Loading />}
     </LoadingContext.Provider>
   );
 };

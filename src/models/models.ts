@@ -5,6 +5,11 @@ export class ResponseError extends AxiosError<{
   status: number;
 }> {}
 
+export type SigninModel = {
+  access_token: string;
+  refresh_token: string;
+}
+
 export type DealsModel = {
   deal_id: string;
   deal_type: string;

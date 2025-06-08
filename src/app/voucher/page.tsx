@@ -1,35 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import axios, { AxiosResponse } from "axios";
-import { VoucherModel } from "@/utils/models";
-import { useState, useEffect } from "react";
-import { HandleResponseError } from "@/utils/functions";
-import Cookies from "js-cookie";
+import { useVoucher } from '@/hooks/vouchers/useVouchers';
 
 export default function MyCouponsPage() {
-  const [myCoupons, setVouchers] = useState([] as VoucherModel[]);
-
-  const getVouchers = async () => {
-    try {
-      const res = (await axios.get(
-        process.env.NEXT_PUBLIC_API_URL + "/api/v1/user/vouchers",
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("access_token")}`,
-          },
-        }
-      )) as AxiosResponse<VoucherModel[]>;
-
-      setVouchers(res.data);
-    } catch (error) {
-      HandleResponseError(error);
-    }
-  };
-
-  useEffect(() => {
-    getVouchers();
-  }, []);
+  const { myCoupons } = useVoucher();
 
   return (
     <div className="p-6 space-y-4">

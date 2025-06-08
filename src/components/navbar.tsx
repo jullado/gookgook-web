@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Cookies from "js-cookie";
 import clsx from "clsx";
+import { useAuth } from '@/hooks/users/useAuth';
 
 const tabs = [
   { name: "สิทธิพิเศษ", href: "/deal" },
@@ -13,9 +13,10 @@ const tabs = [
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { logout } = useAuth();
 
-  const handleLogout = () => {
-    Cookies.remove("access_token");
+  const handleLogout = async () => {
+    await logout();
     window.location.href = "/deal";
   };
 
