@@ -29,3 +29,29 @@
 * **HTTP**: Axios
 * **Utils**: dayjs, js-cookie
 * **Slider**: Swiper.js
+
+---
+
+## 🗂️ Project Structure
+
+📦 root  
+├── 📁 .vscode               # การตั้งค่า VS Code เฉพาะโปรเจกต์นี้  
+├── 📁 assets                # ไฟล์ภาพ/ไอคอน/สื่อประกอบ  
+├── 📁 public                # โฟลเดอร์ static assets (เช่น favicon, รูป, etc.)  
+├── 📁 src                   # โฟลเดอร์หลักของ source code  
+│   ├── 📁 app               # 🔁 Next.js App Router และหน้าเพจทั้งหมด  
+│   ├── 📁 components        # 🧩 ส่วนประกอบ UI ที่นำกลับมาใช้ซ้ำได้  
+│   ├── 📁 contexts          # 🌐 React Context (เช่น loading, auth)  
+│   ├── 📁 hooks             # 🪝 React Custom Hooks  
+│   ├── 📁 libs              # 📚 ไลบรารี/ฟังก์ชันเฉพาะทาง เช่น axios wrapper  
+│   ├── 📁 models            # 🧾 TypeScript Interface หรือ Model  
+│   ├── 📁 services          # 📡 ฟังก์ชันเรียก API  
+│   └── 📁 utils             # 🔧 ฟังก์ชันช่วยเหลือทั่วไป  
+├── 🛠️ .env.local            # ตัวแปรสภาพแวดล้อม  
+├── 🧹 .gitignore            # รายการไฟล์ที่ไม่ต้องการ track ใน Git  
+├── 📏 eslint.config.mjs     # การตั้งค่า Lint  
+├── ⚙️ next.config.ts        # การตั้งค่า Next.js  
+├── 📦 package.json          # รายการ dependencies และ script  
+├── 🔐 postcss.config.mjs    # การตั้งค่า PostCSS  
+├── 📚 README.md             # เอกสารแนะนำโปรเจกต์  
+└── 🧱 tsconfig.json         # การตั้งค่า TypeScript  
