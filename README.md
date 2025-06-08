@@ -33,7 +33,7 @@
 ---
 
 ## 🗂️ Project Structure
-
+```text
 📦 root  
 ├── 📁 .vscode               # การตั้งค่า VS Code เฉพาะโปรเจกต์นี้  
 ├── 📁 assets                # ไฟล์ภาพ/ไอคอน/สื่อประกอบ  
@@ -54,4 +54,5 @@
 ├── 📦 package.json          # รายการ dependencies และ script  
 ├── 🔐 postcss.config.mjs    # การตั้งค่า PostCSS  
 ├── 📚 README.md             # เอกสารแนะนำโปรเจกต์  
-└── 🧱 tsconfig.json         # การตั้งค่า TypeScript  
+└── 🧱 tsconfig.json         # การตั้งค่า TypeScript
+```
